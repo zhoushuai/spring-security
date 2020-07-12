@@ -101,9 +101,12 @@ public class RememberMeAuthenticationFilter extends GenericFilterBean implements
 			if (rememberMeAuth != null) {
 				// Attempt authenticaton via AuthenticationManager
 				try {
+
+					//用于验证认证信息是否正确，并返回包括用户授权信息的完整信息
 					rememberMeAuth = authenticationManager.authenticate(rememberMeAuth);
 
 					// Store to SecurityContextHolder
+					// 存储包括用户信息和授权信息的用户认证信息到SecurityContextHolder中
 					SecurityContextHolder.getContext().setAuthentication(rememberMeAuth);
 
 					onSuccessfulAuthentication(request, response, rememberMeAuth);

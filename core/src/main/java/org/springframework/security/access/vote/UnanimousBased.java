@@ -26,6 +26,8 @@ import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.core.Authentication;
 
 /**
+ * 用于表示有一个投拒绝票时就不允许访问
+ * <p>
  * Simple concrete implementation of
  * {@link org.springframework.security.access.AccessDecisionManager} that requires all
  * voters to abstain or grant access.
@@ -54,10 +56,9 @@ public class UnanimousBased extends AbstractAccessDecisionManager {
 	 * false).
 	 *
 	 * @param authentication the caller invoking the method
-	 * @param object the secured object
-	 * @param attributes the configuration attributes associated with the method being
-	 * invoked
-	 *
+	 * @param object         the secured object
+	 * @param attributes     the configuration attributes associated with the method being
+	 *                       invoked
 	 * @throws AccessDeniedException if access is denied
 	 */
 	public void decide(Authentication authentication, Object object,
@@ -79,18 +80,18 @@ public class UnanimousBased extends AbstractAccessDecisionManager {
 				}
 
 				switch (result) {
-				case AccessDecisionVoter.ACCESS_GRANTED:
-					grant++;
+					case AccessDecisionVoter.ACCESS_GRANTED:
+						grant++;
 
-					break;
+						break;
 
-				case AccessDecisionVoter.ACCESS_DENIED:
-					throw new AccessDeniedException(messages.getMessage(
-							"AbstractAccessDecisionManager.accessDenied",
-							"Access is denied"));
+					case AccessDecisionVoter.ACCESS_DENIED:
+						throw new AccessDeniedException(messages.getMessage(
+								"AbstractAccessDecisionManager.accessDenied",
+								"Access is denied"));
 
-				default:
-					break;
+					default:
+						break;
 				}
 			}
 		}
